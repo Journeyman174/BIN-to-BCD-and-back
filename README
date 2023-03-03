@@ -1,0 +1,49 @@
+# BIN-to-BCD-and-back
+
+Task 1: BIN to BCD
+
+	Task 1.1: Pentru implementarea MT am realizat shift-area cuvantului furnizat la intrare, mutand
+bit-ul din dreapta (cel mai putin semnificativ) in stanga bit-ului cel mai semnificativ al cuvantului,
+continuand cu urmatorii biti spre stanga. In starea initiala start, pe cel mai semnificativ bit al cuvantului
+l-am marcat cu simbolul u - pentru 1 si z - pentru zero. In starea s1 ma pozitionez pe ultimul bit
+din dreapta, iar in starea end inlocuiesc bitul respectiv cu X si trec corespunzator valorii
+bitului in starea pun0 si pun1. In starile pun0 si pun1 ma deplasez in stanga la inceputul cuvantului 
+si scriu pe banda 1, respectiv 0, dupa care trec in starea s1 si ciclul se continua pana cand intalnesc
+unul dintre simbolurile u sau z marcate la inceput. Algoritmul se incheie cand se atinge # in stanga 
+cuvantului obtinut si se trece in starea finala accept.
+ 
+	Task 1.2: Implementarea MT se bazeaza pe reprezentarea binara a numarului 5 -> 0101 (b3b2b1b0).
+In starea initiala start plasez capul MT pe cel mai putin semnificativ bit al cuvantului (b0).
+In starea s1 citesc bit-ul b1 de pe banda si trec in starea s2 daca este egal cu 1 (b1 = 1) sau in starea s5 daca
+este egal cu 0 (b1 = 0). In starea s2 caut urmatoarea valoare 1. Daca o gasesc trec in starea stop1, altfel (am 
+ajuns la #) trec in stop0. In starea s5 (b1 = 0) trec in starea s3 corespunzatoare bit-ului b2. Daca b2 = 1,
+numarul este mai mare ca 5 si trec in stop1, altfel, daca ajung la final (#) numarul este mai mic ca 5 si trec in
+starea stop0. In starile stop0 si stop1 scriu pe banda 1, respectiv 0 si sterg continutul benzii la stanga.
+Starea finala este accept.  
+				
+	Task 1.3: MT se bazeaza pe adunarea binara a numerelor si am luat in considerare toate cazurile
+posibile ale biti-lor b1 si b0 (cei mai putin semnificativi). Se tine cont ca 1 + 1 = 0 si transport 1.
+Starea s0 corespune bit-ului 0, starea 1 corespunde bit-ului 1.
+
+	Task 1.4: Transformarea BIN to BCD implementeaza algortimul BIN-to-BCD si se bazeaza pe 
+task-urile anterioare. In starea s0 se scrie la inceputul cuvantului un marker = b. Marker-ul b se va deplasa
+spre dreapta cuvantului, lasand in stanga sa bitii cuvantului dat. Sfarsitul deplasarii este atunci cand 
+marker-ul b intalneste #, capatul din dreapta al cuvantului. Starea s1 realizeaza deplasarea spre dreapta cu 1 bit 
+prin subrutinele shift(1), shift(0). Shiftarea se face prin inlocuirea marker-ului b cu bit-ul din dreapta (1 sau 0) 
+si mutarea marker-ului cu o pozitie spre dreapta. Dupa fiecare shiftare se compara numarul din stanga markerului
+format din 4 biti (o cifra BCD) cu 5. Daca este mai mare ca 5 se aduna 3, altfel se realizeaza urmatoarea shiftare.
+Compararea se realizeaza cu subrutina comp5, iar adunarea cu 3 se realizeaza cu subrutina adr3. Starea s1337 corespunde
+incheierii.
+
+
+Task 2: BCD to BIN
+
+	Task 2.1: Ideea acestui algoritm este aceeasi ca cea de la task 1.1, diferenta provenind din marcarea cu u sau z
+a bit-ului 0 al cuvantului.  
+
+	Task 2.2: Se realizeaza adunarea cu 3 a numarului, adunand succesiv 1, de 3 ori. Bucla s0 inlocuieste 0 cu 1 si 1 cu 0,
+oprindu-se cand se intalneste 1. Bucla se repeta de 3 ori. In starea end, se sterg cifrele binare 0 din stanga numarului.
+
+	Task 2.3: Numarul BCD este format din numere binare pe 4 biti. Algoritmul consta dintr-o deplasare la dreapta bit cu bit
+si o completare la stanga cuvantului cu 0, pentru a pastra grupele de 4 biti. Se compara fiecare cifra BCD cu 8 si daca este mai 
+mare se scade 3 si repeta shiftarea. Operatia de shiftare se termina cand toti bitii numarului BCD sunt 0.
